@@ -22,4 +22,56 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    
+    <resources>
+      <resource>
+          <directory>src/main/resources</directory>
+      </resource>
+	</resources>
+    
+    <plugins>
+      <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<configuration>
+			<source>11</source>
+			<target>11</target>
+			<annotationProcessorPaths>
+				<path>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok</artifactId>
+					<version>${org.projectlombok.version}</version>
+
+				</path>
+			</annotationProcessorPaths>
+		</configuration>
+	</plugin>
+      
+      <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-jar-plugin</artifactId>
+	    <configuration>
+	    	<resources>
+		        <resource>
+		            <directory>src/main/resources</directory>
+		        </resource>
+  			</resources>
+	        <archive>                   
+	            <manifest>
+			        <addClasspath>true</addClasspath>
+		            <classpathPrefix>lib/</classpathPrefix>
+		            <mainClass>main.java.pong.Pong</mainClass>
+	                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+	                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+	            </manifest>
+	        </archive>
+	    </configuration>
+	</plugin>
+      
+    </plugins>
+  </build>  
+  
 </project>
