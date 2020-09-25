@@ -45,8 +45,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		bolitaLock = new ReentrantLock();
 		contrincanteLock = new ReentrantLock();
 		
-		snake = new Snake(this,true,20,20,Color.BLUE);
-		bolita = new Bolita(this, true, 50, 50, Color.ORANGE);
+		snake = new Snake(this,true,50,100,Color.WHITE);
+		bolita = new Bolita(this, true, 20, 20, Color.ORANGE);
 		contrincante = new Contrincante(this, true, 100, 100, Color.DARK_GRAY);
 		
 		timer = new Timer(1, this);
@@ -71,15 +71,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		snake.paint(g);
 		bolita.paint(g);
 		contrincante.paint(g);
-		
+				
 		g.setColor(Color.WHITE);
 		g.drawString("Puntuación Jugador: " + playerScore, 0, 10);
 		g.drawString("Puntuación CPU: " + cpuScore, 0, 25);
 
 	}
+	
+	public GameFrame getGameFrame() {
+		return gameFrame;
+	}
+	
+	public int getMaximumWidth() {
+		return getWidth();
+	}
+	
+	public int getMaximumHeight() {
+		return getHeight();
+	}
 
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent event) {
+		snake.setMovingDirection(event.getKeyCode() | event.getModifiersEx());
 
 	}
 
