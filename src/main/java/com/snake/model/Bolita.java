@@ -3,6 +3,7 @@ package com.snake.model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class Bolita extends Thread {
 
@@ -12,7 +13,9 @@ public class Bolita extends Thread {
 	private static final int REFRESH_SPEED_MILIS = 100;
 	private static final int REFRESH_SPEED_NANOS = 0;
 
-	GamePanel gamePanel;
+	private GamePanel gamePanel;
+	
+	private Random random;
 
 	private boolean active = true;
 
@@ -28,18 +31,49 @@ public class Bolita extends Thread {
 		this.x = x;
 		this.y = y;
 		this.color = color;
+		this.random = new Random();
 	}
 	
-	public Rectangle getBallBounds() {
-		return new Rectangle(x, y, WIDTH, HEIGHT);
-	}
-
 	public void update() {
 		while(active) {
 			waitSomeTime(REFRESH_SPEED_MILIS,REFRESH_SPEED_NANOS);
-			x++;
-			y++;
+			if (ballWasTouched()) {
+				teleportBall();
+			}
 		}
+	}
+	
+	public boolean collisionsWith(Rectangle rectangle) {
+		return (getBallBounds().intersects(rectangle));
+	}
+	
+	public boolean ballWasTouched() {
+		if (gamePanel.getSnake().collisionsWith(getBallBounds())) {
+			gamePanel.playerTouchedBall();
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public void teleportBall() {
+		
+		int posX = random.nextInt(gamePanel.getWidth());
+		int posY = random.nextInt(gamePanel.getHeight());
+		
+		boolean newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
+		
+		while(gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && !newPositionIsValid) {
+			posX = random.nextInt(gamePanel.getWidth());
+			posY = random.nextInt(gamePanel.getHeight());
+			newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
+		}
+		
+		assert !gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && newPositionIsValid : "Ball is in an invalid position, x: " + x + " y: " + y;
+		
+		x = posX;
+		y = posY;
+		
 	}
 
 	public void paint(Graphics g) {
@@ -99,5 +133,8 @@ public class Bolita extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private Rectangle getBallBounds() {
+		return new Rectangle(x, y, WIDTH, HEIGHT);
+	}
 }
