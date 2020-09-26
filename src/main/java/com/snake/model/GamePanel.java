@@ -98,10 +98,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	public void playerTouchedBall() {
 		snake.snakeHasEaten();
+		playerScore++;
 	}
 	
 	public void cpuTouchedBall() {
 		contrincante.snakeHasEaten();
+		cpuScore++;
 	}
 	
 	public int getMaximumWidth() {
