@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Bolita extends Thread {
 
@@ -15,6 +16,8 @@ public class Bolita extends Thread {
 
 	private GamePanel gamePanel;
 	
+	private ReentrantLock lock;
+	
 	private Random random;
 
 	private boolean active = true;
@@ -24,7 +27,7 @@ public class Bolita extends Thread {
 
 	private Color color;
 
-	public Bolita(GamePanel gamePanel, boolean active, int x, int y, Color color) {
+	public Bolita(GamePanel gamePanel, boolean active, int x, int y, Color color, ReentrantLock lock) {
 		super();
 		this.gamePanel = gamePanel;
 		this.active = active;
@@ -32,6 +35,7 @@ public class Bolita extends Thread {
 		this.y = y;
 		this.color = color;
 		this.random = new Random();
+		this.lock = new ReentrantLock();
 	}
 	
 	public void update() {
@@ -48,8 +52,11 @@ public class Bolita extends Thread {
 	}
 	
 	public boolean ballWasTouched() {
-		if (gamePanel.getSnake().collisionsWith(getBallBounds())) {
-			gamePanel.playerTouchedBall();
+		if (gamePanel.getSnake().collisionsWith(getBallBounds()) || gamePanel.getContrincante().collisionsWith(getBallBounds())) {
+			if (gamePanel.getSnake().collisionsWith(getBallBounds()))
+				gamePanel.playerTouchedBall();
+			else
+				gamePanel.cpuTouchedBall();
 			return true;
 		}else {
 			return false;
@@ -63,17 +70,23 @@ public class Bolita extends Thread {
 		
 		boolean newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
 		
+		
 		while(gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && !newPositionIsValid) {
 			posX = random.nextInt(gamePanel.getWidth());
 			posY = random.nextInt(gamePanel.getHeight());
 			newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
 		}
 		
+		lock.lock();
 		assert !gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && newPositionIsValid : "Ball is in an invalid position, x: " + x + " y: " + y;
-		
 		x = posX;
 		y = posY;
+		lock.unlock();
 		
+	}
+	
+	public ReentrantLock getLock() {
+		return lock;
 	}
 
 	public void paint(Graphics g) {
