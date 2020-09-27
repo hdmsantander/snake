@@ -1,0 +1,29 @@
+# CI File for Snake
+image: maven:3.6.3-jdk-11
+
+# Settings for batch mode, package deployment, local repo directory and docker skipping
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+# Use cache with the Maven local repository for all jobs
+cache:
+  paths:
+    - .m2/repository/
+
+stages:
+  - compile
+
+# We build the app and upload target folder to our test directory
+compile:
+  stage: compile
+  script:
+    - mvn $MAVEN_CLI_OPTS validate
+    - mvn $MAVEN_CLI_OPTS clean install package
+    - VERSION=$(grep -m1 '<version>' pom.xml |cut -d '<' -f2  |cut -d '>' -f2)
+    - NAME=$(grep -m1 '<name>' pom.xml |cut -d '<' -f2  |cut -d '>' -f2)
+    - JAR_NAME=$NAME-$VERSION.jar
+  artifacts:
+    expire_in: 5 weeks
+    when: on_success
+    paths: 
+      - target/*.jar
