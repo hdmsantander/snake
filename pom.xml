@@ -4,7 +4,7 @@
 
   <groupId>com</groupId>
   <artifactId>snake</artifactId>
-  <version>0.1</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <name>snake</name>
@@ -63,7 +63,7 @@
 	            <manifest>
 			        <addClasspath>true</addClasspath>
 		            <classpathPrefix>lib/</classpathPrefix>
-		            <mainClass>main.java.pong.Pong</mainClass>
+		            <mainClass>com.snake.SnakeMP</mainClass>
 	                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 	                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 	            </manifest>
