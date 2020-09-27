@@ -15,9 +15,9 @@ public class Bolita extends Thread {
 	private static final int REFRESH_SPEED_NANOS = 0;
 
 	private GamePanel gamePanel;
-	
+
 	private ReentrantLock lock;
-	
+
 	private Random random;
 
 	private boolean active = true;
@@ -37,54 +37,57 @@ public class Bolita extends Thread {
 		this.random = new Random();
 		this.lock = new ReentrantLock();
 	}
-	
+
 	public void update() {
-		while(active) {
-			waitSomeTime(REFRESH_SPEED_MILIS,REFRESH_SPEED_NANOS);
+		while (active) {
+			waitSomeTime(REFRESH_SPEED_MILIS, REFRESH_SPEED_NANOS);
 			if (ballWasTouched()) {
 				teleportBall();
 			}
 		}
 	}
-	
+
 	public boolean collisionsWith(Rectangle rectangle) {
 		return (getBallBounds().intersects(rectangle));
 	}
-	
+
 	public boolean ballWasTouched() {
-		if (gamePanel.getSnake().collisionsWith(getBallBounds()) || gamePanel.getContrincante().collisionsWith(getBallBounds())) {
+		if (gamePanel.getSnake().collisionsWith(getBallBounds())
+				|| gamePanel.getContrincante().collisionsWith(getBallBounds())) {
 			if (gamePanel.getSnake().collisionsWith(getBallBounds()))
 				gamePanel.playerTouchedBall();
 			else
 				gamePanel.cpuTouchedBall();
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public void teleportBall() {
-		
+
 		int posX = random.nextInt(gamePanel.getWidth());
 		int posY = random.nextInt(gamePanel.getHeight());
-		
-		boolean newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
-		
-		
-		while(gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && !newPositionIsValid) {
+
+		boolean newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0
+				&& posY + HEIGHT < gamePanel.getMaximumHeight();
+
+		while (gamePanel.getSnake().collisionsWith(new Rectangle(posX, posY, WIDTH, HEIGHT)) && !newPositionIsValid) {
 			posX = random.nextInt(gamePanel.getWidth());
 			posY = random.nextInt(gamePanel.getHeight());
-			newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0 && posY + HEIGHT < gamePanel.getMaximumHeight();
+			newPositionIsValid = posX > 0 && posX + WIDTH < gamePanel.getMaximumWidth() && posY > 0
+					&& posY + HEIGHT < gamePanel.getMaximumHeight();
 		}
-		
+
 		lock.lock();
-		assert !gamePanel.getSnake().collisionsWith(new Rectangle(posX,posY,WIDTH,HEIGHT)) && newPositionIsValid : "Ball is in an invalid position, x: " + x + " y: " + y;
+		assert !gamePanel.getSnake().collisionsWith(new Rectangle(posX, posY, WIDTH, HEIGHT))
+				&& newPositionIsValid : "Ball is in an invalid position, x: " + x + " y: " + y;
 		x = posX;
 		y = posY;
 		lock.unlock();
-		
+
 	}
-	
+
 	public ReentrantLock getLock() {
 		return lock;
 	}
@@ -146,7 +149,7 @@ public class Bolita extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private Rectangle getBallBounds() {
 		return new Rectangle(x, y, WIDTH, HEIGHT);
 	}
