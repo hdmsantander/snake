@@ -50,6 +50,9 @@ jobs:
     # For more info: https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
     runs-on: ubuntu-latest
     
+    # Needs a successful testing in order to deploy the package
+    needs: [testing]
+    
     # These are the steps to take in this job
     steps:
     
