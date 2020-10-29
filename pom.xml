@@ -6,6 +6,14 @@
   <artifactId>snake</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
+	
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/hdmsantander/snake</url>
+    </repository>
+  </distributionManagement>
 
   <name>snake</name>
   <url>http://maven.apache.org</url>
