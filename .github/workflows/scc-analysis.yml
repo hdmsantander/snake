@@ -29,6 +29,8 @@ jobs:
       
     # These are the steps to take in this job
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       # Store the artifact
       - name: Archive SCC results as an artifact
         uses: actions/upload-artifact@v2
