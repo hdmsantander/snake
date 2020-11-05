@@ -10,9 +10,6 @@ jobs:
   scc_job:
     runs-on: ubuntu-latest
     name: A job to count the lines of code
-    container: 
-      image: maven:3.6.3-openjdk-11
-      options: --user 1000
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,6 +20,15 @@ jobs:
         with:
           args: ${{ env.workspace }} --ci -i java -f json -o scc.json
 
+  artifact_job:
+    needs: [scc_job]
+    runs-on: ubuntu-latest
+    container: 
+      image: alpine:3.11.3
+      options: --user 1000
+      
+    # These are the steps to take in this job
+    steps:
       # Store the artifact
       - name: Archive SCC results as an artifact
         uses: actions/upload-artifact@v2
