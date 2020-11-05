@@ -16,7 +16,7 @@ jobs:
         
       - name: Get the lines of code.
         id: scc
-        uses: hdmsantander/scc-docker-action@1.0
+        uses: hdmsantander/scc-docker-action@1.1
         with:
           args: ${{ env.workspace }} --ci -i java -f json -o scc.json
 
