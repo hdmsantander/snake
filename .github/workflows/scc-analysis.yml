@@ -12,11 +12,11 @@ jobs:
     name: A job to count the lines of code
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
         
       - name: Get the lines of code.
         id: scc
-        uses: hdmsantander/scc-docker-action@1.1
+        uses: hdmsantander/scc-docker-action@1.2
         with:
           args: ${{ env.workspace }} --ci -i java -f json -o scc.json
      
