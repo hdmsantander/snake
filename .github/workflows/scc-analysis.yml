@@ -13,14 +13,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
       - name: Get the lines of code.
         id: scc
-        uses: iryanbell/scc-docker-action@v1.0.0
+        uses: hdmsantander/scc-docker-modified@0.1
         with:
           args: ${{ env.workspace }} --ci -i java -f json -o scc.json
-      # Store the packaged jar as an artifact
+
+      # Store the artifact
       - name: Archive SCC results as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: scc
           path: ./*.json
+          retention-days: 5
