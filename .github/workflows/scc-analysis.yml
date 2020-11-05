@@ -1,3 +1,9 @@
+# This workflow will perform SCC Analysis of the source code
+# For more information see: https://github.com/marketplace/actions/scc-docker-action
+
+# This is the name of the workflow
+name: SCC Analysis
+
 on: [push]
 
 jobs:
@@ -11,4 +17,10 @@ jobs:
         id: scc
         uses: iryanbell/scc-docker-action@v1.0.0
         with:
-          args: ${{ env.workspace }} -i java --format-multi csv:scc.csv,json:scc.json
+          args: ${{ env.workspace }} --ci -i java -f json -o scc.json
+      # Store the packaged jar as an artifact
+      - name: Archive SCC results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: scc
+          path: scc.json
