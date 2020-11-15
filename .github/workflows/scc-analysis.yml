@@ -29,5 +29,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: scc
-          path: .*json
+          path: pom.xml
           retention-days: 5  
