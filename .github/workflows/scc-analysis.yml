@@ -17,7 +17,7 @@ jobs:
         
       - name: Get the lines of code.
         id: scc
-        uses: hdmsantander/scc-docker-action@1.5.7
+        uses: hdmsantander/scc-docker-action@1.5.8
         with:
           args: ${{ env.workspace }} --ci -i java -f json -o scc.json
           
@@ -29,5 +29,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: scc
-          path: pom.xml
+          path: scc.json
           retention-days: 5  
