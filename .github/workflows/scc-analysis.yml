@@ -18,7 +18,7 @@ jobs:
       # SCC Analysis
       - name: Perform SCC analysis of code
         id: scc
-        uses: hdmsantander/scc-docker-action@2.4
+        uses: hdmsantander/scc-docker-action@2.5
         with:
           args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
 
