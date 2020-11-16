@@ -19,15 +19,12 @@ jobs:
         id: scc
         uses: hdmsantander/scc-docker-action@1.5.9
         with:
-          args: ${{ env.workspace }} --ci -i java -f json
-          
-      - name: List files
-        run: ls -la && pwd
-        
+          args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
+
       # Store the artifact
       - name: Archive SCC results as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: scc
-          path: scc
+          path: scc.json
           retention-days: 5  
