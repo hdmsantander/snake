@@ -14,10 +14,11 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@v2.3.4
-        
-      - name: Get the lines of code.
+      
+      # SCC Analysis
+      - name: Perform SCC analysis of code
         id: scc
-        uses: hdmsantander/scc-docker-action@1.5.9
+        uses: hdmsantander/scc-docker-action@2.0
         with:
           args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
 
@@ -27,4 +28,9 @@ jobs:
         with:
           name: scc
           path: scc.json
-          retention-days: 5  
+      
+      # Download the SCC artifact
+      - name: Download SCC results
+        uses: actions/download-artifact@v2
+        with:
+          name: scc
