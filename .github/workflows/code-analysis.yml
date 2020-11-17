@@ -72,7 +72,7 @@ jobs:
       # JSON Transformation for SCC
       - name: Transform SCC results
         id: json-scc
-        uses: hdmsantander/npm-commit-date-ifier-action@0.7
+        uses: hdmsantander/npm-commit-date-ifier-action@v1.0
         with:
           json: ${{ env.workspace }} scc.json
           
@@ -86,7 +86,7 @@ jobs:
       # JSON Transformation for Depends
       - name: Transform Depends results
         id: json-depends
-        uses: hdmsantander/npm-commit-date-ifier-action@0.7
+        uses: hdmsantander/npm-commit-date-ifier-action@v1.0
         with:
           json: ${{ env.workspace }} depends.json
         
