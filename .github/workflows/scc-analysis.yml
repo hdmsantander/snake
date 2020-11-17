@@ -32,7 +32,7 @@ jobs:
       # Depends Analysis
       - name: Perform Depends analysis of code
         id: depends
-        uses: hdmsantander/depends-docker-action@0.1
+        uses: hdmsantander/depends-docker-action@0.2
         with:
           args: ${{ env.workspace }} java src
           
