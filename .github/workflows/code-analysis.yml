@@ -76,10 +76,23 @@ jobs:
         with:
           json: ${{ env.workspace }} scc.json
           
-       # JSON Transformation for Depends
+      # Store the SCC artifact
+      - name: Archive SCC results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: scc
+          path: scc.json
+          
+      # JSON Transformation for Depends
       - name: Transform Depends results
         id: json-depends
         uses: hdmsantander/npm-commit-date-ifier-action@0.7
         with:
           json: ${{ env.workspace }} depends.json
         
+      # Store the Depends artifact
+      - name: Archive Depends results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: depends
+          path: depends.json
