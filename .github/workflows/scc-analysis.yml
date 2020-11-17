@@ -22,7 +22,7 @@ jobs:
         with:
           args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
 
-      # Store the artifact
+      # Store the SCC artifact
       - name: Archive SCC results as an artifact
         uses: actions/upload-artifact@v2
         with:
@@ -30,14 +30,27 @@ jobs:
           path: scc.json
           
       # Depends Analysis
-      - name: Perform SCC analysis of code
+      - name: Perform Depends analysis of code
         id: depends
         uses: hdmsantander/depends-docker-action@0.1
         with:
           args: ${{ env.workspace }} java src
+          
+      # Store the Depends artifact
+      - name: Archive Depends results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: depends
+          path: depends.json
       
       # Download the SCC artifact
       - name: Download SCC results
         uses: actions/download-artifact@v2
         with:
           name: scc
+          
+      # Download the Depends artifact
+      - name: Download Depends results
+        uses: actions/download-artifact@v2
+        with:
+          name: depends
