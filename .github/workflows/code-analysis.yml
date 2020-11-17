@@ -2,16 +2,17 @@
 # For more information see: https://github.com/marketplace/actions/scc-docker-action
 
 # This is the name of the workflow
-name: SCC Analysis
+name: Code Analysis
 
 on: [push]
 
 jobs:
   scc_job:
     runs-on: ubuntu-latest
-    name: A job to count the lines of code
+    name: A job to perform analysis of source code
     steps:
       
+      # Check out our repository
       - name: Checkout
         uses: actions/checkout@v2.3.4
       
@@ -32,14 +33,9 @@ jobs:
       # Depends Analysis
       - name: Perform Depends analysis of code
         id: depends
-        uses: hdmsantander/depends-docker-action@0.2
+        uses: hdmsantander/depends-docker-action@1.0
         with:
           args: ${{ env.workspace }} java src
-          
-          
-      # Show output from depends
-      - name: Depends result
-        run: echo "The result of the analysis was ${{ steps.depends.outputs.depends }}"
           
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
