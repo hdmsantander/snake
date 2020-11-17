@@ -7,7 +7,7 @@ name: Code Analysis
 on: [push]
 
 jobs:
-  scc_job:
+  code_analysis:
     runs-on: ubuntu-latest
     name: A job to perform analysis of source code
     steps:
@@ -43,6 +43,13 @@ jobs:
         with:
           name: depends
           path: depends.json
+  
+  json_manipulation:
+    
+    runs-on: ubuntu-latest
+    name: A job to manipulate the JSONs generated in the code analysis step
+    needs: [code_analysis]
+    steps:
       
       # Download the SCC artifact
       - name: Download SCC results
@@ -56,6 +63,23 @@ jobs:
         with:
           name: depends
           
-      # Use both artifacts
+      # List both artifacts to show them in log
       - name: Present results
         run: cat scc.json && cat depends.json
+      
+      # Manipulate both of them with our action
+      
+      # JSON Transformation for SCC
+      - name: Transform SCC results
+        id: json-scc
+        uses: hdmsantander/npm-commit-date-ifier-action@0.2
+        with:
+          json: ${{ env.workspace }} scc.json
+          
+       # JSON Transformation for Depends
+      - name: Transform Depends results
+        id: json-depends
+        uses: hdmsantander/npm-commit-date-ifier-action@0.2
+        with:
+          json: ${{ env.workspace }} depends.json
+        
