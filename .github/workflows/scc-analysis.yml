@@ -28,6 +28,13 @@ jobs:
         with:
           name: scc
           path: scc.json
+          
+      # Depends Analysis
+      - name: Perform SCC analysis of code
+        id: depends
+        uses: hdmsantander/depends-docker-action@0.1
+        with:
+          args: ${{ env.workspace }} java src
       
       # Download the SCC artifact
       - name: Download SCC results
