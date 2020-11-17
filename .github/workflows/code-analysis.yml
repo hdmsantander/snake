@@ -19,7 +19,7 @@ jobs:
       # SCC Analysis
       - name: Perform SCC analysis of code
         id: scc
-        uses: hdmsantander/scc-docker-action@2.5
+        uses: hdmsantander/scc-docker-action@3.0
         with:
           args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
 
@@ -55,3 +55,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: depends
+          
+      # Use both artifacts
+      - name: Present results
+        run: cat scc.json 
+          - cat depends.json
