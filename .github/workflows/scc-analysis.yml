@@ -36,19 +36,17 @@ jobs:
         with:
           args: ${{ env.workspace }} java src
           
+          
+      # Show output from depends
+      - name: Depends result
+        run: echo "The result of the analysis was ${{ steps.depends.outputs.depends }}"
+          
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: depends
           path: depends.json
-      
-      # Store the Depends artifact using github stuff
-      - name: Archive Depends results as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: depends
-          path: ${{ steps.depends.outputs.result }}   
       
       # Download the SCC artifact
       - name: Download SCC results
