@@ -21,7 +21,7 @@ jobs:
         id: scc
         uses: hdmsantander/scc-docker-action@3.0
         with:
-          args: ${{ env.workspace }} src --ci -i java -f json -o scc.json
+          args: ${{ env.workspace }} src --by-file --ci -i java -o scc.json -f json
 
       # Store the SCC artifact
       - name: Archive SCC results as an artifact
@@ -58,4 +58,4 @@ jobs:
           
       # Use both artifacts
       - name: Present results
-        run: cat scc.json depends.json
+        run: cat scc.json && cat depends.json
