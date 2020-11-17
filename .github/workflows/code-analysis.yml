@@ -58,5 +58,4 @@ jobs:
           
       # Use both artifacts
       - name: Present results
-        run: cat scc.json 
-          - cat depends.json
+        run: cat scc.json depends.json
