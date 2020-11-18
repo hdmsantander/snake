@@ -89,6 +89,10 @@ jobs:
         uses: hdmsantander/npm-commit-date-ifier-action@v1.0
         with:
           json: ${{ env.workspace }} depends.json
+          
+      # List both artifacts to show them in log
+      - name: Echo output
+        run: echo "The result of the JSON transformation was ${{ steps.json-depends.outputs.json }}"
         
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
