@@ -90,9 +90,18 @@ jobs:
         with:
           json: ${{ env.workspace }} depends.json
           
-      # List both artifacts to show them in log
-      - name: Echo output
-        run: echo "The result of the JSON transformation was ${{ steps.json-depends.outputs.json }}"
+      # Upload depends artifact raw to DocumentDB using Lambda
+      - name: Invoke storeDependsRawData Lambda
+        id: upload
+        uses: gagoar/invoke-aws-lambda@master
+        with:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          FunctionName: storeDependsRawData
+          Payload: ${{ steps.transform-json.outputs.json }}
+      
+      - name: Echo response payload
+        run: echo '${{ fromJSON(steps.upload.outputs.response).Payload }}'
         
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
