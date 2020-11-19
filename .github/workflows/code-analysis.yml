@@ -103,7 +103,7 @@ jobs:
       
       # See the response
       - name: Echo response payload
-        run: echo '${{ JSON.stringify(steps.upload.outputs.response) }}'
+        run: echo '${{ steps.upload.outputs.response }}'
         
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
