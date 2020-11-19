@@ -100,10 +100,10 @@ jobs:
           REGION: us-east-2
           FunctionName: storeDependsRawData
           Payload: ${{ steps.json-depends.outputs.json }}
-          
       
+      # See the response
       - name: Echo response payload
-        run: echo '${{ fromJSON(steps.upload.outputs.response).Payload }}'
+        run: echo '${{ fromJSON(steps.upload.outputs.response) }}'
         
       # Store the Depends artifact
       - name: Archive Depends results as an artifact
