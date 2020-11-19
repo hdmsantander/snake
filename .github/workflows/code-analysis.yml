@@ -99,7 +99,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           REGION: us-east-2
           FunctionName: storeDependsRawData
-          Payload: ${{ steps.transform-json.outputs.json }}
+          Payload: ${{ steps.json-depends.outputs.json }}
           
       
       - name: Echo response payload
