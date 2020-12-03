@@ -47,7 +47,7 @@ jobs:
       # Gitlog analysis
       - name: Execute gitlog analysis.
         id: gitlog
-        uses: hdmsantander/git-log-analyzer-action@v0.3
+        uses: hdmsantander/git-log-analyzer-action@v0.4
         with:
           init date: '2020-10-01'
           end date: '2020-12-01'
