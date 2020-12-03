@@ -49,8 +49,8 @@ jobs:
         id: gitlog
         uses: hdmsantander/git-log-analyzer-action@v1.9
         with:
-          min cochanges: 2
-          init date: '2020-08-01'
+          min cochanges: 0
+          init date: '2020-05-01'
           
       # See the response
       - name: Echo gitlog analysis
