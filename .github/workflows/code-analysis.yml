@@ -49,8 +49,6 @@ jobs:
         id: gitlog
         uses: hdmsantander/git-log-analyzer-action@v1.7
         with:
-          init date: '2020-08-01'
-          end date: '2020-12-01'
           min cochanges: 2
           
       # See the response
