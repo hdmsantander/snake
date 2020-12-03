@@ -43,6 +43,15 @@ jobs:
         with:
           name: depends
           path: depends.json
+      
+      # Gitlog analysis
+      - name: Execute gitlog analysis.
+        id: gitlog
+        uses: hdmsantander/git-log-analyzer-action@v0.2
+        with:
+          init date: '2020-10-01'
+          end date: '2020-12-01'
+          min cochanges: 7
   
   json_manipulation:
     
