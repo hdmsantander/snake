@@ -52,6 +52,10 @@ jobs:
           init date: '2020-10-01'
           end date: '2020-12-01'
           min cochanges: 7
+          
+      # See the response
+      - name: Echo gitlog analysis
+        run: echo '${{ steps.gitlog.outputs.frecuencies }}' && echo '${{ steps.gitlog.outputs.coupling }}'
   
   json_manipulation:
     
