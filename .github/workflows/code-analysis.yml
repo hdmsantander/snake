@@ -47,11 +47,11 @@ jobs:
       # Gitlog analysis
       - name: Execute gitlog analysis.
         id: gitlog
-        uses: hdmsantander/git-log-analyzer-action@v0.7
+        uses: hdmsantander/git-log-analyzer-action@v1.1
         with:
-          init date: '2020-10-01'
+          init date: '2020-01-01'
           end date: '2020-12-01'
-          min cochanges: 7
+          min cochanges: 1
           
       # See the response
       - name: Echo gitlog analysis
