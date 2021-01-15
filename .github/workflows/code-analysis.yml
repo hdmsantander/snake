@@ -16,6 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
       
+      # Do archinaut analysis
+      - name: Archinaut analysis
+        id: archinaut
+        uses: hdmsantander/archinaut-action@main
+        with:
+          init date: '2020-01-01'
+          min cochanges: 0
+      
       # SCC Analysis
       - name: Perform SCC analysis of code
         id: scc
@@ -55,14 +63,6 @@ jobs:
       # See the response
       - name: Echo gitlog analysis
         run: echo '${{ steps.gitlog.outputs.frecuencies }}' && echo '${{ steps.gitlog.outputs.coupling }}'
-      
-      # Do archinaut analysis
-      - name: Archinaut analysis
-        id: archinaut
-        uses: hdmsantander/archinaut-action@main
-        with:
-          init date: '2020-01-01'
-          min cochanges: 0
   
   json_manipulation:
     
