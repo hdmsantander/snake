@@ -1,0 +1,27 @@
+# This workflow will perform Gitlog Analysis of the git repository
+
+# This is the name of the workflow
+name: Gitlog analysis
+on: [push]
+jobs:
+  code_analysis:
+    runs-on: ubuntu-latest
+    name: A job to perform analysis of the git repository
+    steps:
+      
+      # Check out our repository
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      
+      # Gitlog analysis
+      - name: Execute gitlog analysis.
+        id: gitlog
+        uses: hdmsantander/git-log-analyzer-action@v1.9
+        with:
+          min cochanges: 0
+          init date: '2020-05-01'
+          
+      # See the response
+      - name: Echo gitlog analysis
+        run: echo '${{ steps.gitlog.outputs.frecuencies }}' && echo "" && echo '${{ steps.gitlog.outputs.coupling }}'
+  

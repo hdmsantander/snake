@@ -1,0 +1,94 @@
+# This workflow will perform depends Analysis of the source code
+
+# This is the name of the workflow
+name: Depends analysis
+on: [push]
+jobs:
+  code_analysis:
+    runs-on: ubuntu-latest
+    name: A job to perform analysis of source code using depends
+    steps:
+      
+      # Check out our repository
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+          
+      # Depends Analysis
+      - name: Perform Depends analysis of code
+        id: depends
+        uses: hdmsantander/depends-docker-action@1.0
+        with:
+          args: ${{ env.workspace }} java src
+          
+      # Store the Depends artifact
+      - name: Archive Depends results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: depends
+          path: depends.json
+  json_manipulation:
+      runs-on: ubuntu-latest
+      name: A job to manipulate the JSONs generated in the code analysis step
+      needs: [code_analysis]
+      steps:
+        
+        # Download the SCC artifact
+        - name: Download SCC results
+          uses: actions/download-artifact@v2
+          with:
+            name: scc
+            
+        # Download the Depends artifact
+        - name: Download Depends results
+          uses: actions/download-artifact@v2
+          with:
+            name: depends
+            
+        # List both artifacts to show them in log
+        - name: Present results
+          run: cat scc.json && cat depends.json
+        
+        # Manipulate both of them with our action
+        
+        # JSON Transformation for SCC
+        - name: Transform SCC results
+          id: json-scc
+          uses: hdmsantander/npm-commit-date-ifier-action@v1.0
+          with:
+            json: ${{ env.workspace }} scc.json
+            
+        # Store the SCC artifact
+        - name: Archive SCC results as an artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: scc
+            path: scc.json
+            
+        # JSON Transformation for Depends
+        - name: Transform Depends results
+          id: json-depends
+          uses: hdmsantander/npm-commit-date-ifier-action@v1.0
+          with:
+            json: ${{ env.workspace }} depends.json
+            
+        # Upload depends artifact raw to DocumentDB using Lambda
+        - name: Invoke storeDependsRawData Lambda
+          id: upload
+          uses: gagoar/invoke-aws-lambda@master
+          with:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            REGION: us-east-2
+            FunctionName: storeDependsRawData
+            Payload: ${{ steps.json-depends.outputs.json }}
+        
+        # See the response
+        - name: Echo response payload
+          run: echo '${{ steps.upload.outputs.response }}'
+          
+        # Store the Depends artifact
+        - name: Archive Depends results as an artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: depends
+            path: depends.json
