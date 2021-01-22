@@ -8,10 +8,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Bolita extends Thread {
 
-	public static final int WIDTH = 13;
-	public static final int HEIGHT = 13;
+	public static final int WIDTH = 20;
+	public static final int HEIGHT = 20;
 
-	private static final int REFRESH_SPEED_MILIS = 100;
+	private static final int REFRESH_SPEED_MILIS = 80;
 	private static final int REFRESH_SPEED_NANOS = 0;
 
 	private GamePanel gamePanel;
