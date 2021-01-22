@@ -32,6 +32,8 @@ jobs:
       - name: Generate report using Archinaut XML output
         uses: EnricoMi/publish-unit-test-result-action@v1.7
         if: always()
-        with: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: archinaut.xml
+        with:
+         check_name: 'Archinaut analysis results'
+         report_individual_runs: true
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         files: archinaut.xml
