@@ -20,7 +20,10 @@ jobs:
         with:
           init date: '2020-01-01'
           min cochanges: 0
-      
+          ssc cloc: 1000
+          scc complexity: 500
+          ssc loc: 200
+                
       # Store the Archinaut artifact
       - name: Archive Archinaut results as an artifact
         uses: actions/upload-artifact@v2
