@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to perform archinaut analysis of source code
     steps:
-      
       # Check out our repository
       - name: Checkout
         uses: actions/checkout@v2.3.4
