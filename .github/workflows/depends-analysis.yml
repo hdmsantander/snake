@@ -32,38 +32,12 @@ jobs:
       needs: [code_analysis]
       steps:
         
-        # Download the SCC artifact
-        - name: Download SCC results
-          uses: actions/download-artifact@v2
-          with:
-            name: scc
-            
         # Download the Depends artifact
         - name: Download Depends results
           uses: actions/download-artifact@v2
           with:
             name: depends
-            
-        # List both artifacts to show them in log
-        - name: Present results
-          run: cat scc.json && cat depends.json
         
-        # Manipulate both of them with our action
-        
-        # JSON Transformation for SCC
-        - name: Transform SCC results
-          id: json-scc
-          uses: hdmsantander/npm-commit-date-ifier-action@v1.0
-          with:
-            json: ${{ env.workspace }} scc.json
-            
-        # Store the SCC artifact
-        - name: Archive SCC results as an artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: scc
-            path: scc.json
-            
         # JSON Transformation for Depends
         - name: Transform Depends results
           id: json-depends
