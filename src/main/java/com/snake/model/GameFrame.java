@@ -7,7 +7,7 @@ import javax.swing.WindowConstants;
 
 public class GameFrame extends JFrame {
 
-	public static final int WIDTH = 500;
+	public static final int WIDTH = 510;
 	public static final int HEIGHT = 400;
 
 	private Dimension dimensions;
@@ -23,7 +23,7 @@ public class GameFrame extends JFrame {
 		setMaximumSize(dimensions);
 		setPreferredSize(dimensions);
 		setResizable(false);
-		setTitle("~ S N A K E ~");
+		setTitle("~* S N A K E *~");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.gamePanel = new GamePanel(this);
