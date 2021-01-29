@@ -20,13 +20,13 @@ jobs:
         with:
           init date: '2020-01-01'
           min cochanges: 0
-          scc cloc: 300
+          scc cloc: 450
           scc complexity: 50
           scc loc: 400
           arch revisions: 30
           arch dependent partners: 50
-          arch depends on partners: 60
-          arch total dependencies: 60
+          arch depends on partners: 70
+          arch total dependencies: 70
           arch cochange partners: 20
           arch churn: 500
                 
