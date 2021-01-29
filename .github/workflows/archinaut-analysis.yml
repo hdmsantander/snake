@@ -21,8 +21,8 @@ jobs:
           init date: '2020-01-01'
           min cochanges: 0
           scc cloc: 450
-          scc complexity: 50
-          scc loc: 400
+          scc complexity: 70
+          scc loc: 410
           arch revisions: 30
           arch dependent partners: 50
           arch depends on partners: 70
