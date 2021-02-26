@@ -36,6 +36,13 @@ jobs:
         with:
           name: archinaut
           path: archinaut.csv
+          
+      # Run Archinaut companion
+      - name: Archinaut companion
+        id: archinaut-companion
+        uses: hdmsantander/archinaut-companion-action@main
+        with:
+          results: ${{ env.workspace }} archinaut.csv
       
       # Create the report
       - name: Generate report using Archinaut XML output
