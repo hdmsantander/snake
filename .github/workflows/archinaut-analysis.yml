@@ -37,7 +37,7 @@ jobs:
           name: archinaut
           path: archinaut.csv
           
-      # Run Archinaut companion action
+      # Run Archinaut companion action to upload
       - name: Archinaut companion
         id: archinaut-companion
         uses: hdmsantander/archinaut-companion-action@main
