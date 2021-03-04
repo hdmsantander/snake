@@ -43,6 +43,9 @@ jobs:
         uses: hdmsantander/archinaut-companion-action@main
         with:
           results: ${{ env.workspace }} archinaut.csv
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_E }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_E }}
+          REGION: us-east-1
       
       # Create the report
       - name: Generate report using Archinaut XML output
