@@ -1,0 +1,30 @@
+ 
+ # This workflow will perform DV8 analysis on the project and upload an artifact of the output
+
+ # This is the name of the workflow
+name: DV8 Analysis
+on: [push]
+jobs:
+  dv8-analysis:
+    runs-on: ubuntu-latest
+    name: A job to perform archinaut analysis of source code
+    steps:
+      # Check out our repository
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      
+      # Do the Archinaut analysis
+      - name: DV8 analysis
+        id: dv8
+        uses: hdmsantander/dv8-action@main
+        with:
+          license key: ${{ secrets.LICENSE_KEY }}
+          activation code: ${{ secrets.ACTIVATION_CODE }}
+          source language: java
+                
+      # Store the DV8 artifact
+      - name: Archive DV8 results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: project
+          path: project.tar
