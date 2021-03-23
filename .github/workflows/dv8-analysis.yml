@@ -7,7 +7,7 @@ on: [push]
 jobs:
   dv8-analysis:
     runs-on: ubuntu-latest
-    name: A job to perform archinaut analysis of source code
+    name: A job to perform DV8 analysis of source code
     steps:
       # Check out our repository
       - name: Checkout
